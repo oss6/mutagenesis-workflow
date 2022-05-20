@@ -12,13 +12,28 @@ def filter_high_affinity_substitutions(mutagenesis_data, threshold=3, method='me
         else:
             return any([hsr1 >= threshold, hsr2 >= threshold, hsr1 <= -threshold, hsr2 <= -threshold])
 
-    new_mutagenesis_data = []
+    high_affinity_mutagenesis_data = []
+    neutral_affinity_mutagenesis_data = []
 
     for m in mutagenesis_data:
-        new_m = m
-        new_m['substitutions'] = list(filter(_filter, m.get('substitutions')))
+        hm = {**m, 'substitutions': []}
+        nm = {**m, 'substitutions': []}
 
-        if len(new_m['substitutions']) > 0:
-            new_mutagenesis_data.append(new_m)
+        for s in m.get('substitutions'):
+            if _filter(s):
+                hm['substitutions'].append(s)
+            else:
+                nm['substitutions'].append(s)
 
-    return new_mutagenesis_data
+        # hm['substitutions'] = list(filter(_filter, m.get('substitutions')))
+
+        # if len(hm['substitutions']) > 0:
+        #     high_affinity_mutagenesis_data.append(hm)
+
+        if len(hm['substitutions']) > 0:
+            high_affinity_mutagenesis_data.append(hm)
+
+        if len(nm['substitutions']) > 0:
+            neutral_affinity_mutagenesis_data.append(nm)
+
+    return high_affinity_mutagenesis_data, neutral_affinity_mutagenesis_data

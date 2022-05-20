@@ -1,4 +1,4 @@
-def set_residue_features(mutagenesis_data, uniprotkb_data):
+def enrich_with_residue_features(mutagenesis_data, uniprotkb_data):
     def _only_important_features(feature):
         feature_type = feature.get('type')
 

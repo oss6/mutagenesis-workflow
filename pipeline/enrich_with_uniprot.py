@@ -64,7 +64,7 @@ def _set_mutagenesis_details(residue, protein):
 
     return new_substitutions
 
-def extract_uniprot_information(mutagenesis_data, protein):
+def enrich_with_uniprot_information(mutagenesis_data, protein):
     new_mutagenesis_data = []
 
     for residue in mutagenesis_data:
