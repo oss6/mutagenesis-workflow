@@ -2,10 +2,15 @@ import json
 from os import path
 from pathlib import Path
 
-def save_mutagenesis_data(output_directory, postfix, mutagenesis_data):
+def save_mutagenesis_data(output_directory, postfix, mutagenesis_data, compact):
     Path(output_directory).mkdir(exist_ok=True)
     with open(path.join(output_directory, 'mutagenesis_data_' + postfix + '.json'), 'w') as mutagenesis_data_json:
-            json.dump(mutagenesis_data, mutagenesis_data_json)
+            json.dump(mutagenesis_data, mutagenesis_data_json, indent=None if compact else 2)
+
+def save_session_input(args):
+    Path(args.output).mkdir(exist_ok=True)
+    with open(path.join(args.output, 'session_input.json'), 'w') as session_input_json:
+        json.dump(vars(args), session_input_json, indent=2)
 
 def delete_keys_from_dict(data, keys):
     for key in keys:
